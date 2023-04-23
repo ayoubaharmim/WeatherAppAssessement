@@ -5,14 +5,15 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList, Image,
-} from "react-native";
+  FlatList,
+  Image,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useCityState} from '../core';
-import { HourlyWeatherData, useWeatherByCity } from "../api";
+import {HourlyWeatherData, useWeatherByCity} from '../api';
 import {WeatherCard} from '../components';
 import {useNavigation} from '@react-navigation/native';
-import { useHourlyWeather } from "../api/use-hourly-forecast";
+import {useHourlyWeather} from '../api/use-hourly-forecast';
 
 export const HourlyWeather = () => {
   const insets = useSafeAreaInsets();
@@ -47,11 +48,15 @@ export const HourlyWeather = () => {
       </TouchableOpacity>
 
       <View style={styles.container}>
-        <FlatList
-          data={data}
-          renderItem={RenderItem}
-          keyExtractor={item => item.dt.toString()}
-        />
+        {isLoading && data === undefined ? (
+          <ActivityIndicator color="#9BA4B5" />
+        ) : (
+          <FlatList
+            data={data}
+            renderItem={RenderItem}
+            keyExtractor={item => item.dt.toString()}
+          />
+        )}
       </View>
     </View>
   );
@@ -59,21 +64,31 @@ export const HourlyWeather = () => {
 
 const RenderItem = ({item}: {item: HourlyWeatherData}) => {
   return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <Text>
-        {new Date(item.dt * 1000).toLocaleTimeString([], {
-          hour: 'numeric',
-          minute: 'numeric',
-        })}
-      </Text>
-      <Image
-        source={{
-          uri: `https://openweathermap.org/img/wn/${item.weather[0].icon}.png`,
-        }}
-        style={{width: 50, height: 50}}
-      />
+    <View
+      style={{
+        alignItems: 'center',
+        backgroundColor: '#9BA4B5',
+        marginVertical: 4,
+        borderRadius: 6,
+        justifyContent: 'space-evenly',
+        paddingVertical: 4,
+      }}>
+      <View style={{flexDirection: 'row'}}>
+        <Text>
+          {new Date(item.dt * 1000).toLocaleTimeString([], {
+            hour: 'numeric',
+            minute: 'numeric',
+          })}
+        </Text>
+        <Image
+          source={{
+            uri: `https://openweathermap.org/img/wn/${item.weather[0].icon}.png`,
+          }}
+          style={{width: 50, height: 50}}
+        />
+        <Text>{item.main.temp} °C</Text>
+      </View>
       <Text>{item.weather[0].description}</Text>
-      <Text>{item.main.temp} °C</Text>
     </View>
   );
 };
@@ -89,7 +104,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginVertical: 10,
     borderRadius: 5,
   },
   label: {
