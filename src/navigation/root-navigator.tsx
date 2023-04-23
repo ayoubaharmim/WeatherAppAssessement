@@ -4,8 +4,8 @@ import {TabNavigator} from './tab-navigator';
 import {Main} from '../screens';
 
 export type MainParamList = {
-  pageOne: undefined;
-  pageTwo: undefined;
+  main: undefined;
+  forecast: undefined;
 };
 
 const Stack = createNativeStackNavigator<MainParamList>();
@@ -13,8 +13,8 @@ const Stack = createNativeStackNavigator<MainParamList>();
 export const RootNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="pageOne" component={Main} />
-      <Stack.Screen name="pageTwo" component={TabNavigator} />
+      <Stack.Screen name="main" component={Main} />
+      <Stack.Screen name="forecast" component={TabNavigator} />
     </Stack.Navigator>
   );
 };

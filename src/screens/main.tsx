@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {deleteCity, getCities, setCity, useCityState} from '../core';
+import { useNavigation } from "@react-navigation/native";
 
 export const Main = () => {
   const insets = useSafeAreaInsets();
-  const {cityState} = useCityState();
+  const {cityState, setCityState} = useCityState();
+  const {navigate} = useNavigation();
 
   const [cities, setCities] = useState(getCities());
   const [newCity, setNewCity] = useState('');
@@ -36,7 +38,10 @@ export const Main = () => {
         onDelete={() => {
           deleteCityFromList(item);
         }}
-        navigate={() => {}}
+        navigate={() => {
+          setCityState({type: 'UPDATE_CITY', payload: item});
+          navigate('forecast');
+        }}
       />
     );
   };
