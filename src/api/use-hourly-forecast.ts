@@ -13,7 +13,12 @@ export const getHourlyWeatherData = async (
   return data.list;
 };
 
-export const useHourlyWeather = (cityName: string) =>
-  useQuery(['hourlyWeatherData', cityName], () =>
-    getHourlyWeatherData(cityName),
+export const useHourlyWeather = (
+  cityName: string,
+  onSuccess?: (data: HourlyWeatherData[]) => void,
+) =>
+  useQuery(
+    ['hourlyWeatherData', cityName],
+    () => getHourlyWeatherData(cityName),
+    {onSuccess},
   );
