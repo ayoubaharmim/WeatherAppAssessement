@@ -7,7 +7,7 @@ export const getWeatherData = async (
   cityName: string,
 ): Promise<WeatherResponse> => {
   const {data} = await axios.get<WeatherResponse>(
-    `${WEATHER_API}/weather?q=${cityName}&appid=${API_KEY}`,
+    `${WEATHER_API}/weather?q=${cityName}&appid=${API_KEY}&units=metric`,
   );
   return data;
 };

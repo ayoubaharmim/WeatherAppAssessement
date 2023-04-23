@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useCityState} from '../core';
 import {useWeatherByCity} from '../api';
+import {WeatherCard} from '../components';
 
 export const HourlyWeather = () => {
   const insets = useSafeAreaInsets();
@@ -10,9 +11,8 @@ export const HourlyWeather = () => {
   const {cityState} = useCityState();
   const {city} = cityState;
 
-  const {data: currentWeather} = useWeatherByCity(city);
-
-  console.warn(currentWeather);
+  const {data: currentWeather, isLoading: currentWeatherLoading} =
+    useWeatherByCity(city);
 
   return (
     <View
@@ -21,8 +21,21 @@ export const HourlyWeather = () => {
         paddingBottom: insets.bottom,
         paddingLeft: insets.left,
         paddingRight: insets.right,
+        ...styles.container,
       }}>
-      <Text>Hourly Weather Screen</Text>
+      {currentWeatherLoading && currentWeather === undefined ? (
+        <ActivityIndicator color="#9BA4B5" />
+      ) : (
+        <WeatherCard city={city} weather={currentWeather!} />
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F1F6F9',
+    alignItems: 'center',
+  },
+});
