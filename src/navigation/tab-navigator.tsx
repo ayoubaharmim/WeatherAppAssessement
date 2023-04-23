@@ -1,6 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {ChartsWeather, HourlyWeather} from '../screens';
+import {ChartIcon, ForeCastIcon} from '../icons';
 
 type TabParamList = {
   Hourly: undefined;
@@ -15,12 +16,20 @@ export const TabNavigator = () => {
       <Tab.Screen
         name="Hourly"
         component={HourlyWeather}
-        options={{headerShown: false, title: 'Forecast'}}
+        options={{
+          headerShown: false,
+          title: 'Forecast',
+          tabBarIcon: () => <ForeCastIcon />,
+        }}
       />
       <Tab.Screen
         name="Daily"
         component={ChartsWeather}
-        options={{headerShown: false, title: 'Chart'}}
+        options={{
+          headerShown: false,
+          title: 'Chart',
+          tabBarIcon: () => <ChartIcon />,
+        }}
       />
     </Tab.Navigator>
   );
