@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useCallback, useState } from "react";
 import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {getCities, useCityState} from '../core';
+import {getCities, setCity, useCityState} from '../core';
 
 export const Main = () => {
   const insets = useSafeAreaInsets();
@@ -11,6 +11,13 @@ export const Main = () => {
   const [newCity, setNewCity] = useState('');
 
   console.warn(cities);
+
+  const addCity = useCallback(() => {
+    setCity(newCity);
+    setNewCity('');
+    setCities(getCities());
+  }, [newCity]);
+
   return (
     <View
       style={{
@@ -20,8 +27,15 @@ export const Main = () => {
         paddingRight: insets.right,
       }}>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder="Enter a city..." />
-        <Button title="Add" onPress={() => {}} disabled={newCity.length === 0} />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter a city..."
+          value={newCity}
+          onChangeText={(val: string) => {
+            setNewCity(val);
+          }}
+        />
+        <Button title="Add" onPress={addCity} disabled={newCity.length === 0} />
       </View>
     </View>
   );
