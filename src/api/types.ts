@@ -8,3 +8,16 @@ export interface WeatherResponse {
     humidity: number;
   };
 }
+
+export interface HourlyWeatherData {
+  dt: number;
+  rain?: any;
+  main: {
+    temp: number;
+    humidity: number;
+  };
+  weather: {
+    description: string;
+    icon: string;
+  }[];
+}

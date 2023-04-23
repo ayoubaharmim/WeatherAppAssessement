@@ -5,12 +5,14 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
+  FlatList, Image,
+} from "react-native";
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useCityState} from '../core';
-import {useWeatherByCity} from '../api';
+import { HourlyWeatherData, useWeatherByCity } from "../api";
 import {WeatherCard} from '../components';
 import {useNavigation} from '@react-navigation/native';
+import { useHourlyWeather } from "../api/use-hourly-forecast";
 
 export const HourlyWeather = () => {
   const insets = useSafeAreaInsets();
@@ -21,6 +23,10 @@ export const HourlyWeather = () => {
 
   const {data: currentWeather, isLoading: currentWeatherLoading} =
     useWeatherByCity(city);
+
+  const {data, isLoading} = useHourlyWeather(city);
+
+  // console.warn(data);
 
   return (
     <View
@@ -39,6 +45,35 @@ export const HourlyWeather = () => {
       <TouchableOpacity style={styles.changeCity} onPress={goBack}>
         <Text style={styles.label}>Change City</Text>
       </TouchableOpacity>
+
+      <View style={styles.container}>
+        <FlatList
+          data={data}
+          renderItem={RenderItem}
+          keyExtractor={item => item.dt.toString()}
+        />
+      </View>
+    </View>
+  );
+};
+
+const RenderItem = ({item}: {item: HourlyWeatherData}) => {
+  return (
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <Text>
+        {new Date(item.dt * 1000).toLocaleTimeString([], {
+          hour: 'numeric',
+          minute: 'numeric',
+        })}
+      </Text>
+      <Image
+        source={{
+          uri: `https://openweathermap.org/img/wn/${item.weather[0].icon}.png`,
+        }}
+        style={{width: 50, height: 50}}
+      />
+      <Text>{item.weather[0].description}</Text>
+      <Text>{item.main.temp} °C</Text>
     </View>
   );
 };
