@@ -40,7 +40,7 @@ export const HourlyWeather = () => {
         paddingRight: insets.right,
         ...styles.container,
       }}>
-      {currentWeatherLoading && currentWeather === undefined ? (
+      {currentWeatherLoading || currentWeather === undefined ? (
         <ActivityIndicator color="#9BA4B5" />
       ) : (
         <WeatherCardMemo city={city} weather={currentWeather!} />
@@ -50,7 +50,7 @@ export const HourlyWeather = () => {
       </TouchableOpacity>
 
       <View style={styles.container}>
-        {isLoading && data === undefined ? (
+        {isLoading || data === undefined ? (
           <ActivityIndicator color="#9BA4B5" />
         ) : (
           <FlatList
