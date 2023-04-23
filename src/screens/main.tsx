@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, FlatList } from "react-native";
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {getCities, setCity, useCityState} from '../core';
 
@@ -17,6 +17,10 @@ export const Main = () => {
     setNewCity('');
     setCities(getCities());
   }, [newCity]);
+
+  const renderCityItem = ({item}: {item: string}) => {
+    return <Text>{item}</Text>;
+  };
 
   return (
     <View
@@ -37,6 +41,8 @@ export const Main = () => {
         />
         <Button title="Add" onPress={addCity} disabled={newCity.length === 0} />
       </View>
+
+      <FlatList data={cities} renderItem={renderCityItem} />
     </View>
   );
 };
