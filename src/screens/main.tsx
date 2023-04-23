@@ -63,10 +63,18 @@ export const Main = () => {
       </View>
 
       {cities.length === 0 ? (
-        <Text>Enter A City</Text>
+        <NoData />
       ) : (
         <FlatList data={cities} renderItem={renderCityItem} />
       )}
+    </View>
+  );
+};
+
+const NoData = () => {
+  return (
+    <View style={styles.noDataContainer}>
+      <Text style={styles.noDataText}>Enter A City</Text>
     </View>
   );
 };
@@ -133,4 +141,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  noDataContainer: {flex: 1, alignItems: 'center', justifyContent: 'center'},
+  noDataText: {fontSize: 30, color: '#212A3E'},
 });
