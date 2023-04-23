@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {DailyWeather, HourlyWeather} from '../screens';
+import {ChartsWeather, HourlyWeather} from '../screens';
 
 type TabParamList = {
   Hourly: undefined;
@@ -19,7 +19,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name="Daily"
-        component={DailyWeather}
+        component={ChartsWeather}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
