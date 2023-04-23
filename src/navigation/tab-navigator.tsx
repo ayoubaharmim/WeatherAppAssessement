@@ -15,12 +15,12 @@ export const TabNavigator = () => {
       <Tab.Screen
         name="Hourly"
         component={HourlyWeather}
-        options={{headerShown: false}}
+        options={{headerShown: false, title: 'Forecast'}}
       />
       <Tab.Screen
         name="Daily"
         component={ChartsWeather}
-        options={{headerShown: false}}
+        options={{headerShown: false, title: 'Chart'}}
       />
     </Tab.Navigator>
   );
