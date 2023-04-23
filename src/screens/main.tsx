@@ -5,10 +5,11 @@ import {
   TextInput,
   View,
   Button,
-  FlatList, TouchableOpacity,
-} from "react-native";
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {getCities, setCity, useCityState} from '../core';
+import {deleteCity, getCities, setCity, useCityState} from '../core';
 
 export const Main = () => {
   const insets = useSafeAreaInsets();
@@ -23,8 +24,21 @@ export const Main = () => {
     setCities(getCities());
   }, [newCity]);
 
+  const deleteCityFromList = useCallback((city: string) => {
+    deleteCity(city);
+    setCities(getCities());
+  }, []);
+
   const renderCityItem = ({item}: {item: string}) => {
-    return <CityListItem city={item} onDelete={() => {}} navigate={() => {}} />;
+    return (
+      <CityListItem
+        city={item}
+        onDelete={() => {
+          deleteCityFromList(item);
+        }}
+        navigate={() => {}}
+      />
+    );
   };
 
   return (
