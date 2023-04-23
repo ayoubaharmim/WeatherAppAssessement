@@ -1,10 +1,16 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useCityState} from '../core';
 import {useWeatherByCity} from '../api';
 import {WeatherCard} from '../components';
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from '@react-navigation/native';
 
 export const HourlyWeather = () => {
   const insets = useSafeAreaInsets();
