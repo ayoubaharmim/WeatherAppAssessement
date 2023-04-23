@@ -4,7 +4,7 @@ import {DailyWeather, HourlyWeather} from '../screens';
 
 type TabParamList = {
   Hourly: undefined;
-  Weekly: undefined;
+  Daily: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -12,8 +12,16 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export const TabNavigator = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Hourly" component={HourlyWeather} />
-      <Tab.Screen name="Weekly" component={DailyWeather} />
+      <Tab.Screen
+        name="Hourly"
+        component={HourlyWeather}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Daily"
+        component={DailyWeather}
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 };
