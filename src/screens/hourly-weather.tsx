@@ -27,7 +27,9 @@ export const HourlyWeather = () => {
 
   const {data, isLoading} = useHourlyWeather(city);
 
-  // console.warn(data);
+  const renderItem = ({item}: {item: HourlyWeatherData}) => {
+    return <Forecast item={item} />;
+  };
 
   return (
     <View
@@ -41,7 +43,7 @@ export const HourlyWeather = () => {
       {currentWeatherLoading && currentWeather === undefined ? (
         <ActivityIndicator color="#9BA4B5" />
       ) : (
-        <WeatherCard city={city} weather={currentWeather!} />
+        <WeatherCardMemo city={city} weather={currentWeather!} />
       )}
       <TouchableOpacity style={styles.changeCity} onPress={goBack}>
         <Text style={styles.label}>Change City</Text>
@@ -53,7 +55,7 @@ export const HourlyWeather = () => {
         ) : (
           <FlatList
             data={data}
-            renderItem={RenderItem}
+            renderItem={renderItem}
             keyExtractor={item => item.dt.toString()}
           />
         )}
@@ -62,7 +64,7 @@ export const HourlyWeather = () => {
   );
 };
 
-const RenderItem = ({item}: {item: HourlyWeatherData}) => {
+const Forecast = React.memo(({item}: {item: HourlyWeatherData}) => {
   return (
     <View
       style={{
@@ -91,7 +93,9 @@ const RenderItem = ({item}: {item: HourlyWeatherData}) => {
       <Text>{item.weather[0].description}</Text>
     </View>
   );
-};
+});
+
+const WeatherCardMemo = React.memo(WeatherCard);
 
 const styles = StyleSheet.create({
   container: {
